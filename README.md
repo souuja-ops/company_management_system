@@ -76,7 +76,14 @@ The Company Management System is a web application designed to streamline and ma
    ```bash
     python manage.py createsuperuser
    ```
+7. **Fetch tasks from JSON Placeholder API (optional):**
 
+   Populate the database with sample data using the JSON Placeholder API:
+
+   ```bash
+   python manage.py fetch_tasks
+   ```
+   
 ## Usage
 
 1. **Run the development server:**
