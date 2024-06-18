@@ -83,7 +83,7 @@ The Company Management System is a web application designed to streamline and ma
    ```bash
    python manage.py fetch_tasks
    ```
-   
+
 ## Usage
 
 1. **Run the development server:**
@@ -112,6 +112,10 @@ company_management/
 │   ├── admin.py
 │   ├── apps.py
 │   ├── forms.py
+│   ├── management/
+│   │   └── commands/
+│   │       ├── __init__.py
+│   │       └── fetch_tasks.py
 │   ├── models.py
 │   ├── urls.py
 │   ├── views.py
