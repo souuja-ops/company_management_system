@@ -4,6 +4,11 @@
 
 The Company Management System is a web application designed to streamline and manage various aspects of a company's operations. This system provides functionalities for user authentication, role-based access control, department management, task assignment, and employee management. The application is built using Django and deployed using Docker on Render.
 
+### Live Demo
+
+You can access a live demo of the application [here](https://skynet-5c65.onrender.com/).
+
+
 ## Table of Contents
 
 1. [Features](#Features)
