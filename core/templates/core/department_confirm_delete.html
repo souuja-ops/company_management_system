@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Confirm Department Deletion</title>
+</head>
+<body>
+    <h2>Confirm Department Deletion</h2>
+    <p>Are you sure you want to delete the department "{{ department.name }}"?</p>
+    
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit">Confirm Delete</button>
+        <a href="{% url 'department_list' %}">Cancel</a>
+    </form>
+</body>
+</html>

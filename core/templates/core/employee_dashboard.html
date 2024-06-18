@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Dashboard</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-12 text-center">
+            <h1 class="mb-4">Employee Dashboard</h1>
+            <br>
+            <h2>Welcome, {{ request.user.username }}!</h2>
+            <form method="POST" action="{% url 'logout' %}" class="mb-4">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger">Logout</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="row">
+        {% for task in tasks %}
+            <div class="col-md-6 mb-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h3 class="card-title">{{ task.title }}</h3>
+                        <p class="card-text">Status: 
+                            {% if task.completed %}
+                                <span class="badge badge-success">Completed</span>
+                            {% else %}
+                                <span class="badge badge-warning">In Progress</span>
+                            {% endif %}
+                        </p>
+                        <form method="post" action="{% url 'employee_dashboard' %}" class="mt-2">
+                            {% csrf_token %}
+                            <input type="hidden" name="task_id" value="{{ task.pk }}">
+                            <div class="btn-group" role="group" aria-label="Task actions">
+                                <button type="submit" name="action" value="mark_done" class="btn btn-success">Mark as Done</button>
+                                <button type="submit" name="action" value="mark_in_progress" class="btn btn-warning">Mark as In Progress</button>
+                                <button type="submit" name="action" value="clear_completed" class="btn btn-danger">Clear Task</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+<!-- Bootstrap JS and dependencies -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

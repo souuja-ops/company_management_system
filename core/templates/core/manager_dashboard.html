@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Manager Dashboard</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom Styles -->
+    <style>
+        /* Custom CSS */
+        .dashboard-container {
+            margin: 20px;
+        }
+        .section-header {
+            margin-top: 20px;
+            margin-bottom: 10px;
+            font-size: 24px;
+        }
+        .task-summary {
+            margin-top: 10px;
+            margin-bottom: 20px;
+        }
+        .action-link {
+            display: block;
+            margin-bottom: 10px;
+        }
+        .logout-button {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container dashboard-container">
+        <div class="col-md-12 text-center">
+            <h1 class="mb-4">Manager Dashboard</h1>
+            <br>
+            <h2>Welcome, {{ request.user.username }}!</h2>
+            <form method="POST" action="{% url 'logout' %}" class="mb-4">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger">Logout</button>
+            </form>
+        </div>
+        <!-- Summary Section -->
+        <div class="card mb-4">
+            <div class="card-header">
+                <h2 class="section-header">Summary</h2>
+            </div>
+            <div class="card-body">
+                <p class="card-text">Task Completion Rate: {{ task_completion_rate }}%</p>
+                <p class="card-text">Pending Tasks: {{ pending_tasks }}</p>
+            </div>
+        </div>
+
+        <!-- Department Actions Section -->
+        <div class="card mb-4">
+            <div class="card-header">
+                <h2 class="section-header">Department Actions</h2>
+            </div>
+            <div class="card-body">
+                <a href="{% url 'department_list' %}" class="btn btn-primary action-link">View Departments</a>
+                <a href="{% url 'department_create' %}" class="btn btn-success action-link">Create Department</a>
+            </div>
+        </div>
+
+        <!-- Task Actions Section -->
+        <div class="card mb-4">
+            <div class="card-header">
+                <h2 class="section-header">Task Actions</h2>
+            </div>
+            <div class="card-body">
+                <a href="{% url 'task_list' %}" class="btn btn-primary action-link">View Tasks</a>
+                <a href="{% url 'task_create' %}" class="btn btn-success action-link">Create Task</a>
+            </div>
+        </div>
+
+        <!-- Employee Actions Section -->
+        <div class="card mb-4">
+            <div class="card-header">
+                <h2 class="section-header">Employee Actions</h2>
+            </div>
+            <div class="card-body">
+                <a href="{% url 'employee_list' %}" class="btn btn-primary action-link">View Employees</a>
+            </div>
+            
+        </div>
+
+        <!-- Task Management Section -->
+        <div class="card mb-4">
+            <div class="card-header">
+                <h2 class="section-header">Task Management</h2>
+            </div>
+            <div class="card-body">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Title</th>
+                            <th>Description</th>
+                            <th>Assigned To</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for task in tasks %}
+                        <tr>
+                            <td>{{ task.title }}</td>
+                            <td>{{ task.description }}</td>
+                            <td>{{ task.assigned_to.username }}</td>
+                            <td>
+                                {% if task.completed %}
+                                    Completed
+                                {% else %}
+                                    Pending
+                                {% endif %}
+                            </td>
+                            <td>
+                                <a href="{% url 'task_edit' task.id %}" class="btn btn-sm btn-primary">Edit</a>
+                                <a href="{% url 'task_delete' task.id %}" class="btn btn-sm btn-danger">Delete</a>
+                                <a href="{% url 'assign_task' task.id %}" class="btn btn-sm btn-success">Assign</a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
